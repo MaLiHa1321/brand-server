@@ -64,7 +64,7 @@ app.get('/brands/:id', async(req,res) =>{
   res.send(result)
 })
 
-// create phone
+// create phone data
 app.post('/phones', async(req,res) =>{
 
   const newPhone = req.body;
@@ -80,7 +80,7 @@ app.get('/phones', async(req,res) =>{
   res.send(result)
 })
 
-// get id update
+// get id for phones data update
 app.get('/phones/:id', async(req,res) =>{
   const id = req.params.id;
   const query = {_id: new ObjectId(id)}
