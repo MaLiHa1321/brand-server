@@ -51,12 +51,14 @@ app.post('/brands', async(req,res) =>{
 
 })
 
+// get the brand categories
 app.get('/brands', async(req,res) =>{
   const cursor = brandCollection.find()
   const result = await cursor.toArray()
   res.send(result)
 })
 
+// get the dynamic id for brand crategories
 app.get('/brands/:id', async(req,res) =>{
   const id = req.params.id;
   const query = {_id: new ObjectId(id)}
