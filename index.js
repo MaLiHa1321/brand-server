@@ -117,7 +117,7 @@ app.post('/cart', async(req,res) =>{
   res.send(result)
 
 })
-// get cart date
+// get the cart data for cartItem
 app.get('/cart', async(req,res) =>{
   const cursor = cartCollection.find()
   const result = await cursor.toArray()
