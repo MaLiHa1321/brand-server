@@ -25,14 +25,21 @@ const client = new MongoClient(uri, {
 async function run() {
   try {
     // Connect the client to the server	(optional starting in v4.7)
-    await client.connect();
+    // await client.connect();
 
      // Connect to the "insertDB" database and access its "haiku" collection
      const database = client.db("brands");
      const brandCollection = database.collection("brand");
      const phonesCollection = database.collection("phones");
      const cartCollection = database.collection("carts");
+     const userCollection = database.collection("user")
 
+
+    //  user creation
+    app.post('/user', async(req,res) =>{
+      const newUser = req.body;
+      console.log(newUser)
+    })
 
 
 //  create brand
@@ -80,6 +87,7 @@ app.get('/phones/:id', async(req,res) =>{
   const result = await phonesCollection.findOne(query)
   res.send(result)
 })
+// for phone data update
 app.put('/phones/:id', async(req,res) =>{
   const id = req.params.id;
   const filter = { _id: new ObjectId(id)}
