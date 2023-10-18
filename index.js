@@ -31,7 +31,7 @@ async function run() {
      const database = client.db("brands");
      const brandCollection = database.collection("brand");
      const phonesCollection = database.collection("phones");
-     const tabCollection = database.collection("tablets");
+     const cartCollection = database.collection("carts");
 
 
 
@@ -73,7 +73,55 @@ app.get('/phones', async(req,res) =>{
   res.send(result)
 })
 
+// get id update
+app.get('/phones/:id', async(req,res) =>{
+  const id = req.params.id;
+  const query = {_id: new ObjectId(id)}
+  const result = await phonesCollection.findOne(query)
+  res.send(result)
+})
+app.put('/phones/:id', async(req,res) =>{
+  const id = req.params.id;
+  const filter = { _id: new ObjectId(id)}
+  const options = {upsert: true}
+  const updateproduct = req.body;
+  const product ={
+    $set: {
+      name : updateproduct.name,
+     brand : updateproduct.brand,
+      photo : updateproduct.photo,
+      type : updateproduct.type,
+      des : updateproduct.des,
+      price : updateproduct.price,
+      rating : updateproduct.rating
+    
+    }
+  }
+  const result = await phonesCollection.updateOne(filter,product,options)
+  res.send(result)
+})
 
+// create cart item
+app.post('/cart', async(req,res) =>{
+  const cartItem = req.body;
+  console.log(cartItem)
+  const result = await cartCollection.insertOne(cartItem);
+  res.send(result)
+
+})
+// get cart date
+app.get('/cart', async(req,res) =>{
+  const cursor = cartCollection.find()
+  const result = await cursor.toArray()
+  res.send(result)
+})
+// delete cart item
+app.delete('/cart/:id', async(req,res) =>{
+  const id = req.params.id;
+  const query = {_id : new ObjectId(id)};
+  const result= await cartCollection.deleteOne(query)
+  res.send(result)
+})
 
 
 
